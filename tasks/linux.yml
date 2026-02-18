@@ -99,6 +99,12 @@
     args:
       chdir: "/opt/mythic"
 
+  - name: Install Forge
+    ansible.builtin.command: "/opt/mythic/mythic-cli install github https://github.com/MythicAgents/forge -f"
+    become: yes
+    args:
+      chdir: "/opt/mythic"
+
   - name: Install Apollo
     ansible.builtin.command: "/opt/mythic/mythic-cli install github https://github.com/MythicAgents/Apollo -f"
     become: yes
@@ -131,6 +137,12 @@
 
   - name: Start HTTPX
     ansible.builtin.command: "/opt/mythic/mythic-cli start httpx"
+    become: yes
+    args:
+      chdir: "/opt/mythic"
+
+  - name: Start Forge
+    ansible.builtin.command: "/opt/mythic/mythic-cli start forge"
     become: yes
     args:
       chdir: "/opt/mythic"
