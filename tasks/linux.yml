@@ -93,20 +93,32 @@
     args:
       chdir: "/opt/mythic"
 
-  - name: Install Poseidon
-    ansible.builtin.command: "/opt/mythic/mythic-cli install github https://github.com/MythicAgents/poseidon -f"
+  - name: Install HTTPX
+    ansible.builtin.command: "/opt/mythic/mythic-cli install github https://github.com/MythicC2Profiles/httpx -f"
     become: yes
     args:
       chdir: "/opt/mythic"
 
-  - name: Install Apfell
-    ansible.builtin.command: "/opt/mythic/mythic-cli install github https://github.com/MythicAgents/apfell -f"
+  - name: Install Apollo
+    ansible.builtin.command: "/opt/mythic/mythic-cli install github https://github.com/MythicAgents/Apollo -f"
     become: yes
     args:
       chdir: "/opt/mythic"
 
-  - name: Install Thanatos
-    ansible.builtin.command: "/opt/mythic/mythic-cli install github https://github.com/MythicAgents/thanatos -f"
+  - name: Install Merlin
+    ansible.builtin.command: "/opt/mythic/mythic-cli install github https://github.com/MythicAgents/Merlin -f"
+    become: yes
+    args:
+      chdir: "/opt/mythic"
+
+  - name: Install Xenon
+    ansible.builtin.command: "/opt/mythic/mythic-cli install github https://github.com/MythicAgents/Xenon -f"
+    become: yes
+    args:
+      chdir: "/opt/mythic"
+
+  - name: Install Erebus
+    ansible.builtin.command: "/opt/mythic/mythic-cli install github https://github.com/Whispergate/Erebus -f"
     become: yes
     args:
       chdir: "/opt/mythic"
@@ -117,20 +129,32 @@
     args:
       chdir: "/opt/mythic"
 
-  - name: Start Poseidon
-    ansible.builtin.command: "/opt/mythic/mythic-cli start poseidon"
+  - name: Start HTTPX
+    ansible.builtin.command: "/opt/mythic/mythic-cli start httpx"
     become: yes
     args:
       chdir: "/opt/mythic"
 
-  - name: Start Apfell
-    ansible.builtin.command: "/opt/mythic/mythic-cli start apfell"
+  - name: Start Apollo
+    ansible.builtin.command: "/opt/mythic/mythic-cli start apollo"
     become: yes
     args:
       chdir: "/opt/mythic"
 
-  - name: Start Thanatos
-    ansible.builtin.command: "/opt/mythic/mythic-cli start thanatos"
+  - name: Start Merlin
+    ansible.builtin.command: "/opt/mythic/mythic-cli start merlin"
+    become: yes
+    args:
+      chdir: "/opt/mythic"
+
+  - name: Start Xenon
+    ansible.builtin.command: "/opt/mythic/mythic-cli start xenon"
+    become: yes
+    args:
+      chdir: "/opt/mythic"
+
+  - name: Start Erebus
+    ansible.builtin.command: "/opt/mythic/mythic-cli start erebus_wrapper"
     become: yes
     args:
       chdir: "/opt/mythic"
