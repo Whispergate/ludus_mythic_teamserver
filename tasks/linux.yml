@@ -93,8 +93,14 @@
     args:
       chdir: "/opt/mythic"
 
-  - name: Install HTTPX
-    ansible.builtin.command: "/opt/mythic/mythic-cli install github https://github.com/MythicC2Profiles/httpx -f"
+  - name: Install SMB
+    ansible.builtin.command: "/opt/mythic/mythic-cli install github https://github.com/MythicC2Profiles/smb -f"
+    become: yes
+    args:
+      chdir: "/opt/mythic"
+
+  - name: Install Service Wrapper
+    ansible.builtin.command: "/opt/mythic/mythic-cli install github https://github.com/MythicAgents/service_wrapper -f"
     become: yes
     args:
       chdir: "/opt/mythic"
@@ -117,12 +123,6 @@
     args:
       chdir: "/opt/mythic"
 
-  - name: Install Xenon
-    ansible.builtin.command: "/opt/mythic/mythic-cli install github https://github.com/MythicAgents/Xenon -f"
-    become: yes
-    args:
-      chdir: "/opt/mythic"
-
   - name: Install Erebus
     ansible.builtin.command: "/opt/mythic/mythic-cli install github https://github.com/Whispergate/Erebus -f"
     become: yes
@@ -135,8 +135,8 @@
     args:
       chdir: "/opt/mythic"
 
-  - name: Start HTTPX
-    ansible.builtin.command: "/opt/mythic/mythic-cli start httpx"
+  - name: Start SMB
+    ansible.builtin.command: "/opt/mythic/mythic-cli start smb"
     become: yes
     args:
       chdir: "/opt/mythic"
@@ -159,14 +159,14 @@
     args:
       chdir: "/opt/mythic"
 
-  - name: Start Xenon
-    ansible.builtin.command: "/opt/mythic/mythic-cli start xenon"
+  - name: Start Erebus
+    ansible.builtin.command: "/opt/mythic/mythic-cli start erebus_wrapper"
     become: yes
     args:
       chdir: "/opt/mythic"
 
-  - name: Start Erebus
-    ansible.builtin.command: "/opt/mythic/mythic-cli start erebus_wrapper"
+  - name: Start Service Wrapper
+    ansible.builtin.command: "/opt/mythic/mythic-cli start service_wrapper"
     become: yes
     args:
       chdir: "/opt/mythic"
