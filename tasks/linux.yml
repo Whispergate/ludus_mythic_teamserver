@@ -117,8 +117,8 @@
     args:
       chdir: "/opt/mythic"
 
-  - name: Install Merlin
-    ansible.builtin.command: "/opt/mythic/mythic-cli install github https://github.com/MythicAgents/Merlin -f"
+  - name: Install Starburst
+    ansible.builtin.command: "/opt/mythic/mythic-cli install github https://github.com/Whispergate/Starburst -f"
     become: yes
     args:
       chdir: "/opt/mythic"
@@ -154,7 +154,7 @@
       chdir: "/opt/mythic"
 
   - name: Start Merlin
-    ansible.builtin.command: "/opt/mythic/mythic-cli start merlin"
+    ansible.builtin.command: "/opt/mythic/mythic-cli start starburst"
     become: yes
     args:
       chdir: "/opt/mythic"
