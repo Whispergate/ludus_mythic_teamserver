@@ -153,7 +153,7 @@
     args:
       chdir: "/opt/mythic"
 
-  - name: Start Merlin
+  - name: Start Starburst
     ansible.builtin.command: "/opt/mythic/mythic-cli start starburst"
     become: yes
     args:
