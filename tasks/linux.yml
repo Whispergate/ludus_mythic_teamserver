@@ -177,6 +177,12 @@
     args:
       chdir: "/opt/mythic"
 
+  - name: Expose SOCKS proxy ports on all interfaces
+    ansible.builtin.command: "./mythic-cli config set MYTHIC_SERVER_DYNAMIC_PORTS_BIND_LOCALHOST_ONLY false"
+    become: yes
+    args:
+      chdir: "/opt/mythic"
+
   - name: Restart Mythic
     ansible.builtin.command: "./mythic-cli restart"
     become: yes
