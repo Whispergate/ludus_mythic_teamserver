@@ -11,7 +11,7 @@ None.
 ```yaml
 - hosts: mythic_teamserver_host
   roles:
-    - 0xRedpoll.ludus_mythic_teamserver
+    - whispergate.ludus_mythic_teamserver
 ```
 
 ## Example Ludus Range Config
@@ -30,7 +30,7 @@ ludus:
       snapshot: false
       block_internet: false
     roles:
-      - 0xRedpoll.ludus_mythic_teamserver
+      - whispergate.ludus_mythic_teamserver
 ```
 
 ## License
