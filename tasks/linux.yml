@@ -21,7 +21,7 @@
 
   - name: Install for Docker installation
     ansible.builtin.apt:
-      name: 
+      name:
         - gpg
         - ca-certificates
         - git
@@ -87,98 +87,30 @@
       chdir: "/opt/mythic"
     become: yes
 
-  - name: Install HTTP
-    ansible.builtin.command: "/opt/mythic/mythic-cli install github https://github.com/MythicC2Profiles/http -f"
+  - name: Install Mythic C2 Profiles
+    ansible.builtin.command: "/opt/mythic/mythic-cli install github {{ item }} -f"
     become: yes
     args:
       chdir: "/opt/mythic"
+    loop: "{{ ludus_mythic_c2_profiles }}"
+    when: ludus_mythic_c2_profiles | length > 0
 
-  - name: Install SMB
-    ansible.builtin.command: "/opt/mythic/mythic-cli install github https://github.com/MythicC2Profiles/smb -f"
+  - name: Install Mythic Agents
+    ansible.builtin.command: "/opt/mythic/mythic-cli install github {{ item }} -f"
     become: yes
     args:
       chdir: "/opt/mythic"
-
-  - name: Install Service Wrapper
-    ansible.builtin.command: "/opt/mythic/mythic-cli install github https://github.com/MythicAgents/service_wrapper -f"
-    become: yes
-    args:
-      chdir: "/opt/mythic"
-
-  - name: Install Forge
-    ansible.builtin.command: "/opt/mythic/mythic-cli install github https://github.com/MythicAgents/forge -f"
-    become: yes
-    args:
-      chdir: "/opt/mythic"
-
-  - name: Install Apollo
-    ansible.builtin.command: "/opt/mythic/mythic-cli install github https://github.com/MythicAgents/Apollo -f"
-    become: yes
-    args:
-      chdir: "/opt/mythic"
-
-  - name: Install Starburst
-    ansible.builtin.command: "/opt/mythic/mythic-cli install github https://github.com/Whispergate/Starburst -f"
-    become: yes
-    args:
-      chdir: "/opt/mythic"
-
-  - name: Install Erebus
-    ansible.builtin.command: "/opt/mythic/mythic-cli install github https://github.com/Whispergate/Erebus -f"
-    become: yes
-    args:
-      chdir: "/opt/mythic"
-
-  - name: Start HTTP
-    ansible.builtin.command: "/opt/mythic/mythic-cli start http"
-    become: yes
-    args:
-      chdir: "/opt/mythic"
-
-  - name: Start SMB
-    ansible.builtin.command: "/opt/mythic/mythic-cli start smb"
-    become: yes
-    args:
-      chdir: "/opt/mythic"
-
-  - name: Start Forge
-    ansible.builtin.command: "/opt/mythic/mythic-cli start forge"
-    become: yes
-    args:
-      chdir: "/opt/mythic"
-
-  - name: Start Apollo
-    ansible.builtin.command: "/opt/mythic/mythic-cli start apollo"
-    become: yes
-    args:
-      chdir: "/opt/mythic"
-
-  - name: Start Starburst
-    ansible.builtin.command: "/opt/mythic/mythic-cli start starburst"
-    become: yes
-    args:
-      chdir: "/opt/mythic"
-
-  - name: Start Erebus
-    ansible.builtin.command: "/opt/mythic/mythic-cli start erebus_wrapper"
-    become: yes
-    args:
-      chdir: "/opt/mythic"
-
-  - name: Start Service Wrapper
-    ansible.builtin.command: "/opt/mythic/mythic-cli start service_wrapper"
-    become: yes
-    args:
-      chdir: "/opt/mythic"
+    loop: "{{ ludus_mythic_agents }}"
+    when: ludus_mythic_agents | length > 0
 
   - name: Make Mythic available on VPN
-    ansible.builtin.command: "./mythic-cli config set mythic_server_bind_localhost_only false"
+    ansible.builtin.command: "./mythic-cli config set mythic_server_bind_localhost_only {{ ludus_mythic_bind_localhost_only | lower }}"
     become: yes
     args:
       chdir: "/opt/mythic"
 
-  - name: Expose SOCKS proxy ports on all interfaces
-    ansible.builtin.command: "./mythic-cli config set MYTHIC_SERVER_DYNAMIC_PORTS_BIND_LOCALHOST_ONLY false"
+  - name: Configure SOCKS proxy port binding
+    ansible.builtin.command: "./mythic-cli config set MYTHIC_SERVER_DYNAMIC_PORTS_BIND_LOCALHOST_ONLY {{ ludus_mythic_dynamic_ports_bind_localhost_only | lower }}"
     become: yes
     args:
       chdir: "/opt/mythic"
@@ -193,10 +125,6 @@
     ansible.builtin.template:
       src: "mythicteamserver.template"
       dest: "/etc/systemd/system/mythicteamserver.service"
-
-  - name: Check service file was created
-    ansible.builtin.stat:
-      path: "/etc/systemd/system/mythicteamserver.service"
 
   - name: Reload Systemd manager
     ansible.builtin.command: "systemctl daemon-reload"
