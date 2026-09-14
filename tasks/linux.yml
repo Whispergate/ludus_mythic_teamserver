@@ -109,6 +109,12 @@
     loop: "{{ ludus_mythic_agents }}"
     when: ludus_mythic_agents | length > 0
 
+  - name: Make Mythic available on VPN
+    ansible.builtin.command: "./mythic-cli config set mythic_server_bind_localhost_only false"
+    become: yes
+    args:
+      chdir: "/opt/mythic"
+
   - name: Configure SOCKS proxy port binding
     ansible.builtin.command: "./mythic-cli config set MYTHIC_SERVER_DYNAMIC_PORTS_BIND_LOCALHOST_ONLY {{ ludus_mythic_dynamic_ports_bind_localhost_only | lower }}"
     become: yes
