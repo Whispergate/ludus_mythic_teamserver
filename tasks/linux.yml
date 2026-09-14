@@ -144,7 +144,26 @@
       chdir: "/opt/mythic"
     become: yes
     register: mythic_admin_pass
+    changed_when: false
 
-  - name: Output Mythic Password to User
+  - name: Get Mythic Admin Username
+    ansible.builtin.command: "./mythic-cli config get MYTHIC_ADMIN_USER"
+    args:
+      chdir: "/opt/mythic"
+    become: yes
+    register: mythic_admin_user
+    changed_when: false
+
+  - name: Extract Mythic admin credentials
+    ansible.builtin.set_fact:
+      mythic_admin_username: "{{ (mythic_admin_user.stdout | regex_findall('MYTHIC_ADMIN_USER\\s+(\\S+)')) | first | default('mythic_admin') }}"
+      mythic_admin_password: "{{ (mythic_admin_pass.stdout | regex_findall('MYTHIC_ADMIN_PASSWORD\\s+(\\S+)')) | first | default('unknown') }}"
+
+  - name: Output Mythic login details to User
     ansible.builtin.debug:
-      msg: "{{ mythic_admin_pass.stdout }}"
+      msg:
+        - "================= Mythic Teamserver ================="
+        - "URL:      https://{{ ansible_host | default(inventory_hostname) }}:7443"
+        - "Username: {{ mythic_admin_username }}"
+        - "Password: {{ mythic_admin_password }}"
+        - "===================================================="
