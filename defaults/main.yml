@@ -1,8 +1,6 @@
 ---
 ludus_mythic_agents:
-  - https://github.com/MythicAgents/Apollo
   - https://github.com/MythicAgents/forge
-  - https://github.com/MythicAgents/service_wrapper
   - https://github.com/Whispergate/Starburst
   - https://github.com/Whispergate/Erebus
   - https://github.com/Whispergate/Ariadne

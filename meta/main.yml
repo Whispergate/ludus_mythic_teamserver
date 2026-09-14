@@ -4,17 +4,19 @@ dependencies: []
 galaxy_info:
   role_name: ludus_mythic_teamserver
   author: 0xRedpoll
-  description: An Ansible Role that installs a Mythic Teamserver
+  description: An Ansible Role which installs the Mythic Teamserver
   company: ''
   license: GPLv3
   min_ansible_version: "2.10"
   platforms:
     - name: Debian
       versions:
+        - trixie
         - bullseye
         - bookworm
     - name: Ubuntu
       versions:
         - jammy
   galaxy_tags:
-    - ludusmythic
+    - ludus
+    - mythic

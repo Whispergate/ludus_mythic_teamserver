@@ -87,6 +87,12 @@
       chdir: "/opt/mythic"
     become: yes
 
+  - name: Show the Mythic agents and C2 profiles that will be installed
+    ansible.builtin.debug:
+      msg:
+        - "C2 profiles to install: {{ ludus_mythic_c2_profiles }}"
+        - "Agents to install: {{ ludus_mythic_agents }}"
+
   - name: Install Mythic C2 Profiles
     ansible.builtin.command: "/opt/mythic/mythic-cli install github {{ item }} -f"
     become: yes
@@ -102,12 +108,6 @@
       chdir: "/opt/mythic"
     loop: "{{ ludus_mythic_agents }}"
     when: ludus_mythic_agents | length > 0
-
-  - name: Make Mythic available on VPN
-    ansible.builtin.command: "./mythic-cli config set mythic_server_bind_localhost_only {{ ludus_mythic_bind_localhost_only | lower }}"
-    become: yes
-    args:
-      chdir: "/opt/mythic"
 
   - name: Configure SOCKS proxy port binding
     ansible.builtin.command: "./mythic-cli config set MYTHIC_SERVER_DYNAMIC_PORTS_BIND_LOCALHOST_ONLY {{ ludus_mythic_dynamic_ports_bind_localhost_only | lower }}"
