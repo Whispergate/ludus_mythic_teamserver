@@ -67,6 +67,13 @@
         - docker-compose-plugin
       state: present
 
+  - name: Ensure Docker is running and enabled
+    ansible.builtin.systemd:
+      name: docker
+      state: started
+      enabled: true
+    become: true
+
   - name: Remove existing Mythic installation
     ansible.builtin.file:
       path: "/opt/mythic"
@@ -81,11 +88,16 @@
     community.general.make:
       chdir: /opt/mythic
 
-  - name: Start Mythic
+  - name: Start Mythic (retry until core services are healthy)
     ansible.builtin.command: "./mythic-cli start"
     args:
       chdir: "/opt/mythic"
     become: yes
+    register: mythic_start
+    until: mythic_start.rc == 0
+    retries: 10
+    delay: 30
+    changed_when: true
 
   - name: Show the Mythic agents and C2 profiles that will be installed
     ansible.builtin.debug:
